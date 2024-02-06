@@ -1,0 +1,72 @@
+
+   <div *ngIf="dataLoaded==false" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+<table *ngIf="dataLoaded==true" class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Araç Adı</th>
+            <th>Marka Adı</th>
+            <th>Renk</th>
+            <th>Model</th>
+            <th>Ücret</th>
+            <th>Resim</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    <tr *ngIf="carsDetailcar">
+        <td>{{carsDetailcar.carId}}</td>
+        <td>{{carsDetailcar.carName}}</td>
+        <td>{{carsDetailcar.brandName}}</td>
+        <td>{{carsDetailcar.colorName}}</td>
+        <td>{{carsDetailcar.modelYear}}</td>
+        <td>{{carsDetailcar.dailyPrice}}</td>
+  
+        <td>
+            <img *ngIf="carsDetailcar.imagePath"  [src]="baseUrl + carsDetailcar.imagePath"
+            class="icon"
+            style="object-fit: cover"
+            width="150"
+            height="75%"/>
+            <img *ngIf="!carsDetailcar.imagePath" [src]="baseUrl + 'defaultCar.jpg'"
+            class="icon"
+            style="object-fit: cover"
+            width="150"
+            height="75%"/> 
+         
+        </td>
+        <td><button  (click)="addToCart(carsDetailcar)" type="button" class="btn btn-success">Araç Kirala</button>
+        </td>
+     
+    </tr>
+    <tr *ngIf="!carsDetailcar">
+        <div *ngFor="let carDetail of carsDetail">
+        <td>{{carDetail.carId}}</td>
+        <td>{{carDetail.carName}}</td>
+        <td>{{carDetail.brandName}}</td>
+        <td>{{carDetail.colorName}}</td>
+        <td>{{carDetail.modelYear}}</td>
+        <td>{{carDetail.dailyPrice}}</td>
+       
+        <td>
+            <img *ngIf="carDetail.imagePath"  [src]="baseUrl + carDetail.imagePath"
+            class="icon"
+            style="object-fit: cover"
+            width="150"
+            height="75%"/>
+            <img *ngIf="!carDetail.imagePath" [src]="baseUrl + 'defaultCar.jpg'"
+            class="icon"
+            style="object-fit: cover"
+            width="150"
+            height="75%"/> 
+         
+        </td>
+    </div>
+    <td><button  (click)="navigateToRental()" type="button" class="btn btn-success">Araç Kirala</button>
+    </td>
+    </tr>
+</tbody>
+</table>
+ 
