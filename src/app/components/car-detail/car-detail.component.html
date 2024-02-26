@@ -37,8 +37,48 @@
             height="75%"/> 
          
         </td>
-        <td><button  (click)="addToCart(carsDetailcar)" type="button" class="btn btn-success">Araç Kirala</button>
-        </td>
+        <div>
+            <label for="carId">Araç ID:</label>
+            <input type="number" id="carId" name="carId" [(ngModel)]="carId">
+
+            <label for="customerId">Customer ID:</label>
+            <input type="number" id="customerId" name="customerId" [(ngModel)]="customerId">
+
+            <label for="rentDate">Kiralama Tarihi:</label>
+            <input type="datetime-local" id="rentDate" name="rentDate" [(ngModel)]="rentDate">
+          
+            <label for="returnDate">İade Tarihi:</label>
+            <input type="datetime-local" id="returnDate" name="returnDate" [(ngModel)]="returnDate">
+          
+            <button (click)="AddRental()"(click)="addToCart(carsDetailcar)" type="button" class="btn btn-success">Kirala</button>
+            <button (click)="getCheckRentalCars()"(click)="addToCart(carsDetailcar)" type="button" class="btn btn-success">Kontrol Et</button>
+          </div>
+          
+          <div *ngIf="durum !== null">
+            <p *ngIf="!durum">Araç kiralanamaz</p>
+            <p *ngIf="durum">Araç kiralanabilir durumda</p>
+          </div>
+          
+        <!-- <div class="form-group">
+            <label for="aracId">Araç ID:</label>
+  <input type="number" id="carId" [(ngModel)]="carId">
+  
+            <label for="rentDate">Kiralama Tarihi:</label>
+            <input type="date" class="form-control" [(ngModel)]="rentDate" name="rentDate" />
+          </div>
+          <div class="form-group">
+            <label for="returnDate">Dönüş Tarihi:</label>
+            <input type="date" class="form-control" [(ngModel)]="returnDate" name="returnDate" />
+          </div>
+        <td><button (click)="getCheckRentalCars()" (click)="addToCart(carsDetailcar)" type="button" class="btn btn-success">Araç Kirala</button>
+          
+               <div *ngIf="durum !== null">
+                <p *ngIf="!durum">Araç kiralanamaz</p>
+                <p *ngIf="durum">Araç kiralanabilir durumda</p>
+              </div> 
+              
+        
+        </td> -->
      
     </tr>
     <tr *ngIf="!carsDetailcar">

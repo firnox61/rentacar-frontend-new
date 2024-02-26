@@ -1,6 +1,7 @@
 import { Car } from "./car";
+import { CarDetail } from "./carDetail";
 
 export class CartItem{
-    car:Car;
+    carDetail:CarDetail;
     quantity:number;
 }

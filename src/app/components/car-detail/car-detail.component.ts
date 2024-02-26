@@ -6,6 +6,7 @@ import { Car } from '../../models/car';
 import { Rental } from '../../models/rental';
 import { RentalService } from '../../services/rental.service';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -17,13 +18,27 @@ export class CarDetailComponent implements OnInit {
 carsDetail:CarDetail[]=[];
 carsDetailcar:CarDetail;
 dataLoaded=false;
-rentals:Rental;
-baseUrl="https://localhost:7015/images/";
 
-constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute,private rentalService:RentalService, private router:Router, private toastrService:ToastrService)
+baseUrl="https://localhost:7015/images/";
+durum:Boolean;
+rentDate:Date;
+returnDate:Date;
+carId:number;
+carsRentDate:Rental;
+kiralanabilir: boolean;
+customerId:number;
+id:number;
+brandName:string;
+firstName:string;
+lastName:string;
+
+constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute
+  ,private rentalService:RentalService, private router:Router, private toastrService:ToastrService
+  ,private cartService:CartService)
 {
 
 }
+
 ngOnInit(): void {
 this.activatedRoute.params.subscribe((params) => {
   if (params['carId']) {
@@ -36,6 +51,52 @@ this.activatedRoute.params.subscribe((params) => {
 });
 }
 
+// getCheckRentalCar()
+// {
+  
+//   this.rentalService.getCheckRentalCar(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
+// this.kiralanabilir=response;
+// this.toastrService.success("Araç kiralanabilir durumda");
+
+//   })
+// }
+AddRental(): void
+{
+  const rental: Rental = {
+    brandName:this.brandName,
+   firstName:this.firstName,
+    lastName:this.lastName,
+    id:this.id,
+    customerId: this.customerId,
+    carId: this.carId,
+    rentDate: this.rentDate,
+    returnDate: this.returnDate
+  };
+  this.rentalService.AddRental(rental).subscribe(response=>{
+    this.durum=response.success;
+
+    if (this.durum==false) {
+     this.toastrService.error("Hata","Bu araç kiralanamaz");
+   } else {
+     this.toastrService.success("Araç kiralanabilir durumda");
+    // this.navigateToRental();
+   }
+  })
+}
+ getCheckRentalCars()
+ {
+   this.rentalService.getCheckRentalCars(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
+   //this.carsRentDate=response.data;
+   this.durum=response.success;
+
+   if (this.durum==false) {
+    this.toastrService.error("Hata","Bu araç kiralanamaz");
+  } else {
+    this.toastrService.success("Araç kiralanabilir durumda");
+   // this.navigateToRental();
+  }
+  });
+ }
 getCarsDetailByCar(carId:number)
 {
 this.carDetailService.getCarsDetailByCar(carId).subscribe(response=>{
@@ -58,12 +119,13 @@ navigateToRental() {
 }
 addToCart(carsDetailcar:CarDetail)
 {
-  if(carsDetailcar.carId==1)
+  if(carsDetailcar.carId==5)
   {
     this.toastrService.error("Hata","Bu araç kiralanamaz")
   }
   else{
-    this.toastrService.success("Kiralanacak araç eklendi",carsDetailcar.carName)
+    this.toastrService.success("Kiralanacak araç eklendi",carsDetailcar.carName);
+    this.cartService.addToCart(carsDetailcar);
   }
 }
 // AddRental(rentals:Rental)
