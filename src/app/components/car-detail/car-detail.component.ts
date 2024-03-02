@@ -113,9 +113,9 @@ this.carDetailService.getCarsDetail().subscribe(response=>{
 })
 }
 
-navigateToRental() {
+navigateToRental():void {
  // Kiralama sayfasına yönlendirme
- this.router.navigate(['/rental', this.carsDetailcar.carId]);
+ this.router.navigate(['/payment', this.carsDetailcar.carId]);
 }
 addToCart(carsDetailcar:CarDetail)
 {
@@ -128,16 +128,10 @@ addToCart(carsDetailcar:CarDetail)
     this.cartService.addToCart(carsDetailcar);
   }
 }
-// AddRental(rentals:Rental)
-// {
-//   this.rentalService.AddRental(rentals).subscribe(response=>{
- 
-//     console.log('Araç başarıyla kiralandı:', response);
-//   }
-//   )
-// }
-
-
+kirala(): void {
+  // Kiralama işlemi burada gerçekleştirilir
+  this.router.navigate(['/payment']); // Ödeme sayfasına yönlendirme
+}
 
 
 }

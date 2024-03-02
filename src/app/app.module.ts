@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 ​import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CartSummaryComponent } from './components/cart-summary/cart-summary.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CartSummaryComponent } from './components/cart-summary/cart-summary.com
     FilterPipePipe,
     FilterPipeBrandPipe,
     FilterPipeColorPipe,
-    CartSummaryComponent
+    CartSummaryComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
