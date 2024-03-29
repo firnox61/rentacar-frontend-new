@@ -31,6 +31,9 @@
 </div>
   <button (click)="getCarsByBrandAndColor(selectBrand,selectColor)" class="btn btn-primary" type="submit">Filtrele</button>
   <button (click)="clearfilter()" (click)="getCars()" class="btn btn-primary" type="submit">Temizle</button>
+
+  <button (click)="carAdd()"  class="btn btn-primary" type="submit">Ekle</button>
+
   
   
 
@@ -49,6 +52,10 @@
             <li><strong>Araba Adı:</strong> {{ car.carName }}</li>
             <li><strong>Model Yılı:</strong> {{ car.modelYear }}</li>
             <li><strong>Günlük Fiyat:</strong> {{ car.dailyPrice }}</li>
+            <li>  <!-- Güncelleme Butonu -->
+              <button (click)="carUpdate()" class="btn btn-primary btn-sm" >Güncelle</button>
+              <!-- Silme Butonu -->
+              <button class="btn btn-danger btn-sm" >Sil</button></li>
   
           </a>
         </div>

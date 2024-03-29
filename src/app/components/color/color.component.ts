@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Color } from '../../models/color';
 import { ColorService } from '../../services/color.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-color',
@@ -12,7 +13,7 @@ export class ColorComponent implements OnInit {
   dataLoaded=false;
   currentColor:Color;
   filterColorText="";
-  constructor(private colorService:ColorService)
+  constructor(private colorService:ColorService, private router:Router)
   {
 
   }
@@ -50,6 +51,10 @@ export class ColorComponent implements OnInit {
     else{
       return "list-group-item";
     }
+  }
+  colorAdd()
+  {
+    this.router.navigate(['/colors/add']); 
   }
 
 }

@@ -7,6 +7,7 @@ import { Rental } from '../../models/rental';
 import { RentalService } from '../../services/rental.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-car-detail',
@@ -18,7 +19,7 @@ export class CarDetailComponent implements OnInit {
 carsDetail:CarDetail[]=[];
 carsDetailcar:CarDetail;
 dataLoaded=false;
-
+checkRentalCar:FormGroup;
 baseUrl="https://localhost:7015/images/";
 durum:Boolean;
 rentDate:Date;
@@ -34,7 +35,7 @@ lastName:string;
 
 constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute
   ,private rentalService:RentalService, private router:Router, private toastrService:ToastrService
-  ,private cartService:CartService)
+  ,private cartService:CartService,private formBuilder:FormBuilder)
 {
 
 }
@@ -42,24 +43,20 @@ constructor(private carDetailService:CarDetailService, private activatedRoute:Ac
 ngOnInit(): void {
 this.activatedRoute.params.subscribe((params) => {
   if (params['carId']) {
-    const carId = +params['carId'];
-    this.getCarsDetailByCar(carId);//araca tıkladığımızda araç detaylarını gösteriyor
+   // const carId = +params['carId'];
+   this.carId=+params['carId']
+    this.getCarsDetailByCar(this.carId);//araca tıkladığımızda araç detaylarını gösteriyor
+   // this.getCheckRentalCars();
   } else {
+    //this.getCheckRentalCars(this.carId,this.rentDate,this.returnDate);
    // this.getCarsDetail();
-  //  this.AddRental(this.rentals);
+    //this.AddRental(this.rentals);
   }
+  
 });
 }
 
-// getCheckRentalCar()
-// {
-  
-//   this.rentalService.getCheckRentalCar(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
-// this.kiralanabilir=response;
-// this.toastrService.success("Araç kiralanabilir durumda");
 
-//   })
-// }
 AddRental(): void
 {
   const rental: Rental = {
@@ -68,12 +65,13 @@ AddRental(): void
     lastName:this.lastName,
     id:this.id,
     customerId: this.customerId,
-    carId: this.carId,
+    carId: this.carsDetailcar.carId,
     rentDate: this.rentDate,
     returnDate: this.returnDate
   };
   this.rentalService.AddRental(rental).subscribe(response=>{
     this.durum=response.success;
+   
 
     if (this.durum==false) {
      this.toastrService.error("Hata","Bu araç kiralanamaz");
@@ -83,20 +81,53 @@ AddRental(): void
    }
   })
 }
- getCheckRentalCars()
- {
-   this.rentalService.getCheckRentalCars(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
-   //this.carsRentDate=response.data;
-   this.durum=response.success;
+// createCheckRentalCar()
+// {
+// this.checkRentalCar=this.formBuilder.group({
+//   carId:["",Validators.required],
+//   rentDate:["",Validators.required],
+//   returnDate:["",Validators.required]
+// })
+// }
+// getCheckRentalCars()
+// {
+//   if(this.checkRentalCar.valid)
+//   {
+//     let rentalModel=Object.assign({},this.checkRentalCar.value)
+//     this.rentalService.getCheckRentalCars(rentalModel).subscribe(response=>{
+//       console.log(response)
+//     })
+//   }
+// }
 
-   if (this.durum==false) {
-    this.toastrService.error("Hata","Bu araç kiralanamaz");
-  } else {
-    this.toastrService.success("Araç kiralanabilir durumda");
-   // this.navigateToRental();
-  }
+  getCheckRentalCars()
+ {
+
+  //carId==this.carsDetailcar.carId;
+    this.rentalService.getCheckRentalCars(this.carId ,this.rentDate,this.returnDate).subscribe(response=>{
+
+    this.durum=response.success;
+    console.log(response)
+    if (this.durum) {
+      this.toastrService.success('Araç kiralanabilir durumda', 'Başarılı');
+    } else {
+      this.toastrService.error('Bu araç kiralanamaz', 'Hata');
+    }
+   
+  //  if (this.durum==false) {
+  //    this.toastrService.error("Hata","Bu araç kiralanamaz");
+  //  } else {
+  //    this.toastrService.success("Araç kiralanabilir durumda");
+  //   // this.navigateToRental();
+  //  }
+   },error => {
+    // Hata durumunda çalışacak işlemler
+    console.error('Bir hata oluştu:', error);
+    // Örneğin, hata olduğunda bir hata mesajı gösterebilirsiniz
+    this.toastrService.error('Bir hata oluştu', 'Hata');
   });
- }
+   
+  }
 getCarsDetailByCar(carId:number)
 {
 this.carDetailService.getCarsDetailByCar(carId).subscribe(response=>{

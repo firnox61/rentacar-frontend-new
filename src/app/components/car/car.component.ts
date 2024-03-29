@@ -139,7 +139,14 @@ export class CarComponent implements OnInit {
     }
   }
   
-
+carAdd()
+{
+  this.router.navigate(['/cars/add']); 
+}
+carUpdate()
+{
+  this.router.navigate(['/cars/update']); 
+}
 
 }
 

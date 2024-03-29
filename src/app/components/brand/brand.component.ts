@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from '../../models/brand';
 import { BrandService } from '../../services/brand.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-brand',
@@ -12,7 +13,7 @@ export class BrandComponent implements OnInit {
   dataLoaded=false;
   currentBrand:Brand;
   filterBrandText="";
-constructor(private brandService:BrandService)
+constructor(private brandService:BrandService,private router:Router)
 {
 
 }
@@ -48,6 +49,10 @@ getAllBrandClass()
   else{
     return "list-group-item";
   }
+}
+BrandAdd()
+{
+  this.router.navigate(['/brands/add']); 
 }
 
 }
