@@ -1,12 +1,12 @@
-<div class="mb-3">
+ <!-- <div class="mb-3">
   <label for="filterBrandText" class="form-label">Marka ara</label>
   <input type="text" [(ngModel)]="filterBrandText" class="form-control" id="filterBrandText" placeholder="arama ifadesi giriniz">
 </div>
 <div *ngIf="filterBrandText.length>2" class="alert alert-success">
   {{filterBrandText}} aradınız.
-</div>
+  </div>
 
-<button (click)="BrandAdd()"  class="btn btn-primary" type="submit">Ekle</button>
+  <button (click)="BrandAdd()"  class="btn btn-primary" type="submit">Ekle</button>
 
 <ul class="list-group">
     <li [class]="getAllBrandClass()" routerLink="/cars" >Tüm Araçlar</li>
@@ -14,14 +14,38 @@
     routerLink="/cars/brand/{{brand.brandId}}"
     *ngFor="let brand of brands | filterPipeBrand:filterBrandText "
     [class]="getCurrentBrandClass(brand)">{{brand.brandName}}
-        <!-- Güncelleme Butonu -->
-        <button class="btn btn-primary btn-sm" >Güncelle</button>
-        <!-- Silme Butonu -->
+      
+        <button (click)="brandUpdate(brand)" class="btn btn-primary btn-sm " >Güncelle</button>
+        
+       
         <button class="btn btn-danger btn-sm" >Sil</button>
      
   </li>
   </ul>
   <h5 *ngIf="currentBrand">{{currentBrand.brandName}} seçtiniz</h5>
- 
-  
- 
+  -->
+
+ <div class="container">
+    <h2>Araç Markaları</h2>
+    <div class="mb-3">
+      <label for="filterBrandText" class="form-label">Marka ara</label>
+      <input type="text" [(ngModel)]="filterBrandText" class="form-control" id="filterBrandText" placeholder="arama ifadesi giriniz">
+    </div>
+    <div *ngIf="filterBrandText.length>2" class="alert alert-success">
+      {{filterBrandText}} aradınız.
+    </div>
+    <button (click)="BrandAdd()"  class="btn btn-sm btn-warning ml-2" type="submit">Ekle</button>
+    <ul class="list-group">
+      <li [class]="getAllBrandClass()" routerLink="/cars" >Tüm Araçlar</li>
+      <li (click)="setCurrentBrand(brand)" 
+    routerLink="/cars/brand/{{brand.brandId}}"
+       *ngFor="let brand of brands | filterPipeBrand:filterBrandText" class="list-group-item">
+        {{ brand.brandName }}
+        
+      </li>
+      <li>
+        
+       <!-- <button class="btn btn-sm btn-danger ml-2" (click)="deleteBrand(brand.brandId)">Sil</button> -->
+      </li>
+    </ul>
+  </div> 

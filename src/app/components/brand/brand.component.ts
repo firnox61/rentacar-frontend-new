@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from '../../models/brand';
 import { BrandService } from '../../services/brand.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-brand',
@@ -11,15 +11,23 @@ import { Router } from '@angular/router';
 export class BrandComponent implements OnInit {
   brands:Brand[]=[];
   dataLoaded=false;
+  brand:Brand;
   currentBrand:Brand;
   filterBrandText="";
-constructor(private brandService:BrandService,private router:Router)
+constructor(private brandService:BrandService,private activatedRoute:ActivatedRoute
+  , private router:Router)
 {
 
 }
 
 ngOnInit(): void {
+  // this.activatedRoute.params.subscribe(params=>{
+  //   if(params["brandId"]){
+  //     this.brandUpdate(params["brandId"]);
+  //   }
+  // })
 this.getBrands();
+//this.BrandUpdate(this.brand)
 }
 
 getBrands()
@@ -31,6 +39,7 @@ getBrands()
 }
 setCurrentBrand(brand:Brand){
   this.currentBrand=brand;
+  //this.router.navigate(['brands',brand.brandId]);
 }
 getCurrentBrandClass(brand:Brand){
   if(brand==this.currentBrand){
@@ -54,5 +63,5 @@ BrandAdd()
 {
   this.router.navigate(['/brands/add']); 
 }
-
+ 
 }

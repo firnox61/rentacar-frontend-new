@@ -1,4 +1,4 @@
-<div class="content">
+ <div class="content">
     <div class="col-md-12">
         <div class="card">
 
@@ -18,7 +18,18 @@
                     class="form-control" 
                     placeholder="araç Adı"/>
                 </div>
-            </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="carId"> Araç Id</label>
+                    <div class="form-group">
+                        <input type="text" 
+                        id="carId" 
+                        formControlName="carId" 
+                        class="form-control" 
+                        placeholder="Araç Id"/>
+                    </div>
+                    </div>
                 <div class="mb-3">
                     <label for="brandId"> Marka Adı</label>
                     <div class="form-group">
@@ -28,7 +39,7 @@
                         class="form-control" 
                         placeholder="Marka"/>
                     </div>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label for="colorId"> Renk Adı</label>
                     <div class="form-group">
@@ -69,4 +80,37 @@
         </div>
     </div>
 
-</div>
+</div> 
+
+
+<!-- <div class="container">
+    <h2>Araç Güncelleme</h2>
+    <form [formGroup]="carUpdateForm" (ngSubmit)="update()">
+      <div class="form-group">
+        <label for="carId">Araç ID</label>
+        <input type="text" class="form-control" id="carId" formControlName="carId"  >
+      </div>
+      <div class="form-group">
+        <label for="brandId">Marka ID</label>
+        <input type="text" class="form-control" id="brandId" formControlName="brandId">
+      </div>
+      <div class="form-group">
+        <label for="colorId">Renk ID</label>
+        <input type="text" class="form-control" id="colorId" formControlName="colorId">
+      </div>
+      <div class="form-group">
+        <label for="modelYear">Model Yılı</label>
+        <input type="text" class="form-control" id="modelYear" formControlName="modelYear">
+      </div>
+      <div class="form-group">
+        <label for="dailyPrice">Günlük Ücret</label>
+        <input type="text" class="form-control" id="dailyPrice" formControlName="dailyPrice">
+      </div>
+      <div class="form-group">
+        <label for="carName">Araç Adı</label>
+        <input type="text" class="form-control" id="carName" formControlName="carName">
+      </div>
+      <button type="submit" class="btn btn-primary">Güncelle</button>
+    </form>
+  </div>
+   -->

@@ -143,9 +143,9 @@ carAdd()
 {
   this.router.navigate(['/cars/add']); 
 }
-carUpdate()
+carUpdate(car:Car)
 {
-  this.router.navigate(['/cars/update']); 
+  this.router.navigate(['/cars/update',car.carId]); 
 }
 
 }

@@ -34,13 +34,8 @@
 
   <button (click)="carAdd()"  class="btn btn-primary" type="submit">Ekle</button>
 
-  
-  
 
-
-
-
-<div class="container">
+  <div class="container">
     <div class="row">
       <div class="col-md-4">
         <div class="list-group">
@@ -53,7 +48,7 @@
             <li><strong>Model Yılı:</strong> {{ car.modelYear }}</li>
             <li><strong>Günlük Fiyat:</strong> {{ car.dailyPrice }}</li>
             <li>  <!-- Güncelleme Butonu -->
-              <button (click)="carUpdate()" class="btn btn-primary btn-sm" >Güncelle</button>
+              <button (click)="carUpdate(car)" class="btn btn-primary btn-sm" >Güncelle</button>
               <!-- Silme Butonu -->
               <button class="btn btn-danger btn-sm" >Sil</button></li>
   

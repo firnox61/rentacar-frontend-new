@@ -1,0 +1,33 @@
+<table class="table">
+    <thead class="table-info">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Marka</th>
+            <th scope="col">
+                <button class="btn btn-success" (click)="brandAdd()">
+          Marka Ekle
+        </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let brand of brands">
+            <th scope="row">{{ brand.brandId }}</th>
+            <td>{{ brand.brandName }}</td>
+            <td>
+                <button class="btn btn-warning" click="routerLink" routerLink="update/{{brand.brandId}}">Güncelle</button>
+                <button class="btn btn-danger mx-2" click="routerLink" routerLink="delete/{{brand.brandId}}">Sil</button>
+            </td>
+        </tr>
+    </tbody>
+  </table>
+<!-- <div class="container">
+    <h2>Araç Markaları</h2>
+    <ul class="list-group">
+      <li *ngFor="let brand of brands" class="list-group-item">
+        {{brand.brandId}}
+        {{ brand.brandName }}
+      
+      </li>
+    </ul>
+   -->
