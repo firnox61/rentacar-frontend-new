@@ -1,5 +1,12 @@
 <table class="table">
     <thead class="table-info">
+      <div class="mb-3">
+        <label for="filterBrandText" class="form-label">Marka ara</label>
+        <input type="text" [(ngModel)]="filterBrandText" class="form-control" id="filterBrandText" placeholder="arama ifadesi giriniz">
+      </div>
+      <div *ngIf="filterBrandText.length>2" class="alert alert-success">
+        {{filterBrandText}} aradınız.
+      </div>
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Marka</th>
@@ -11,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let brand of brands">
+        <tr *ngFor="let brand of brands | filterPipeBrand:filterBrandText">
             <th scope="row">{{ brand.brandId }}</th>
             <td>{{ brand.brandName }}</td>
             <td>

@@ -1,4 +1,4 @@
-<!-- <table class="table">
+ <!-- <table class="table">
     <thead class="table-info">
         <tr>
             <th scope="col">Id</th>
@@ -41,9 +41,83 @@
         
     </tbody>
     
-  </table> -->
+  </table>  -->
   <table class="table">
     <thead class="table-info">
+      <div class="mb-3">
+        <label for="filterCarDetailText" class="form-label">Araç ara</label>
+        <button class="btn btn-success" (click)="carAdd()">
+          Araç Ekle
+        </button>
+        <input type="text" [(ngModel)]="filterCarDetailText" class="form-control" id="filterCarDetailText" placeholder="arama ifadesi giriniz">
+      </div>
+      <div *ngIf="filterCarDetailText.length>2" class="alert alert-success">
+        {{filterCarDetailText}} aradınız.
+      </div>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Marka</th>
+            <th scope="col">Renk</th>
+            <th scope="col">Model Yılı</th>
+            <th scope="col">Günlük Fiyat</th>
+            <th scope="col">Resim</th>
+            <th scope="col">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cardetail of carsDetail | filterPipeCarlist:filterCarDetailText ">
+            <td>{{ cardetail.carId }}</td>
+            <td>{{ cardetail.carName }}</td>
+            <td>{{ cardetail.brandName }}</td>
+            <td>{{ cardetail.colorName }}</td>
+            <td>{{ cardetail.modelYear }}</td>
+            <td>{{ cardetail.dailyPrice }}</td>
+            <td>
+              <button class="btn btn-info" routerLink="update/{{ cardetail.carId }}">Güncelle</button>
+              <button class="btn btn-primary mx-2" routerLink="delete/{{ cardetail.carId }}">Sil</button>
+              
+              </td>
+
+        </tr>
+    </tbody>
+</table>
+
+  <!-- <table class="table">
+    <thead class="table-info">
+        <div class="mb-3">
+            <label for="filterText" class="form-label">Araç ara</label>
+            <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="arama ifadesi giriniz">
+          </div>
+          <div *ngIf="filterText.length>2" class="alert alert-success">
+            {{filterText}} aradınız.
+          </div>
+          
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ selectBrand || 'Markalar' }}
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let brand of brands">
+                <a class="dropdown-item" href="#" (click)="updateSelectedBrand(brand)" >{{brand.brandName}}
+          
+                </a>
+              </li>
+            </ul>
+          
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ selectColor || 'Renkler' }}
+            </button>
+            <ul class="dropdown-menu" >
+              <li *ngFor="let color of colors">
+                <a class="dropdown-item" href="#" (click)="updateSelectedColor(color)">{{color.colorName}}
+                </a>
+              </li>
+          
+            </ul>
+          </div>
+            <button (click)="getCarsByBrandAndColor(selectBrand,selectColor)" class="btn btn-primary" type="submit">Filtrele</button>
+            <button (click)="clearfilter()" (click)="getCarsDetails()" class="btn btn-primary" type="submit">Temizle</button>
+          
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Marka</th>
@@ -56,7 +130,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let cardetail of carsDetail">
+        <tr *ngFor="let cardetail of carsDetail | filterPipe:filterText">
             <td>{{ cardetail.carId }}</td>
             <td>{{ cardetail.brandName }}</td>
             <td>{{ cardetail.carName }}</td>
@@ -73,4 +147,4 @@
             </td>
         </tr>
     </tbody>
-</table>
+</table> -->

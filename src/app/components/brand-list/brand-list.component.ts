@@ -11,6 +11,7 @@ import { Brand } from '../../models/brand';
 export class BrandListComponent implements OnInit {
   brands:Brand[]=[];
   dataLoaded=false;
+  filterBrandText="";
   constructor(private brandService:BrandService,private activatedRoute:ActivatedRoute
     , private router:Router){
 

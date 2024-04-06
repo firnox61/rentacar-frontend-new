@@ -1,5 +1,12 @@
 <table class="table">
     <thead class="table-info">
+        <div class="mb-3">
+            <label for="filterColorText" class="form-label">Renk ara</label>
+            <input type="text" [(ngModel)]="filterColorText" class="form-control" id="filterColorText" placeholder="arama ifadesi giriniz">
+          </div>
+          <div *ngIf="filterColorText.length>2" class="alert alert-success">
+            {{filterColorText}} aradınız.
+          </div> 
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Renk</th>
@@ -11,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let color of colors">
+        <tr *ngFor="let color of colors | filterPipeColor:filterColorText">
             <th scope="row">{{ color.colorId }}</th>
             <td>{{ color.colorName }}</td>
             <td>

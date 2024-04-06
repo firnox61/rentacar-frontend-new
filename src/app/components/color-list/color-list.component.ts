@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ColorListComponent implements OnInit {
   colors:Color[]=[];
   dataLoaded=false;
+  filterColorText="";
   constructor(private colorService:ColorService,private activatedRoute:ActivatedRoute
     , private router:Router){
 

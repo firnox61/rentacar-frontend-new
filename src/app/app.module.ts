@@ -28,6 +28,8 @@ import { CarUpdateComponent } from './components/car-update/car-update.component
 import { BrandListComponent } from './components/brand-list/brand-list.component';
 import { ColorListComponent } from './components/color-list/color-list.component';
 import { CarListComponent } from './components/car-list/car-list.component';
+import { CarlistPipe } from './pipes/carlist.pipe';
+import { FilterPipeCarlistPipe } from './pipes/filter-pipe-carlist.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { CarListComponent } from './components/car-list/car-list.component';
     CarUpdateComponent,
     BrandListComponent,
     ColorListComponent,
-    CarListComponent
+    CarListComponent,
+    CarlistPipe,
+    FilterPipeCarlistPipe
   ],
   imports: [
     BrowserModule,
