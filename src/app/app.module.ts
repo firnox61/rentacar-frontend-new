@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarComponent } from './components/car/car.component';
@@ -30,6 +30,9 @@ import { ColorListComponent } from './components/color-list/color-list.component
 import { CarListComponent } from './components/car-list/car-list.component';
 import { CarlistPipe } from './pipes/carlist.pipe';
 import { FilterPipeCarlistPipe } from './pipes/filter-pipe-carlist.pipe';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,9 @@ import { FilterPipeCarlistPipe } from './pipes/filter-pipe-carlist.pipe';
     ColorListComponent,
     CarListComponent,
     CarlistPipe,
-    FilterPipeCarlistPipe
+    FilterPipeCarlistPipe,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,9 @@ import { FilterPipeCarlistPipe } from './pipes/filter-pipe-carlist.pipe';
       positionClass:"toast-bottom-right"
     })
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

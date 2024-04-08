@@ -13,6 +13,10 @@ import { BrandListComponent } from './components/brand-list/brand-list.component
 import { ColorUpdateComponent } from './components/color-update/color-update.component';
 import { ColorListComponent } from './components/color-list/color-list.component';
 import { CarListComponent } from './components/car-list/car-list.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginGuard } from './guards/login.guard';
+import { RegisterGuard } from './guards/register.guard';
 
 const routes: Routes = [
   {path:"",pathMatch:"full", component:CarComponent},
@@ -33,7 +37,9 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   {path:"cars/brandlist/add",component:BrandAddComponent},
   {path:"cars/colorlist/add",component:ColorAddComponent},
-  {path:"cars/carlist/add",component:CarAddComponent}
+  {path:"cars/carlist/add",component:CarAddComponent, canActivate:[LoginGuard,RegisterGuard]},
+  {path:"login",component:LoginComponent},
+  {path:"register",component:RegisterComponent}
 
 
   
