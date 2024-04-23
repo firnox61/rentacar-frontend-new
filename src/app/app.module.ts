@@ -33,6 +33,7 @@ import { FilterPipeCarlistPipe } from './pipes/filter-pipe-carlist.pipe';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { UserConnectComponent } from './components/user-connect/user-connect.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     CarlistPipe,
     FilterPipeCarlistPipe,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserConnectComponent
   ],
   imports: [
     BrowserModule,

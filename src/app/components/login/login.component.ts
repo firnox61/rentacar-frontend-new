@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { LocaleStorageService } from '../../services/locale-storage.service';
+import { UserService } from '../../services/user.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,9 @@ export class LoginComponent implements OnInit {
 
   loginForm:FormGroup;
   
-  constructor(private formBuilder:FormBuilder, private authService:AuthService, private toastrService:ToastrService)
+  constructor(private formBuilder:FormBuilder, private authService:AuthService, 
+    private toastrService:ToastrService, private localStorage:LocaleStorageService
+    , private userService:UserService, private router:Router)
   {
   
   }
@@ -28,6 +33,14 @@ export class LoginComponent implements OnInit {
         password:["",Validators.required]
       })
     }
+    human()
+    {
+      let result=this.userService.getUserById
+    }
+    logOut()
+    {
+      this.localStorage.remove("token");
+    }
     login()
     {
       if(this.loginForm.valid)
@@ -35,9 +48,11 @@ export class LoginComponent implements OnInit {
           console.log(this.loginForm.value)
           let loginModel=Object.assign({},this.loginForm.value)
           this.authService.login(loginModel).subscribe(response=>{
-            //console.log(response)
+            console.log(response)
             this.toastrService.info(response.message)
-            localStorage.setItem("token",response.data.token)
+            this.localStorage.setItem("token", response.data.token)
+            this.router.navigate(['/cars']); 
+            //localStorage.setItem("token",response.data.token)
           },responseError=>{
             // if(responseError.error.Errors.length>0){
             //   for (let i = 0; i < responseError.error.Errors.length; i++) {

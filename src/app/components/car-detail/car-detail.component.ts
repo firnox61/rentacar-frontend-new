@@ -21,6 +21,7 @@ carsDetailcar:CarDetail;
 dataLoaded=false;
 checkRentalCar:FormGroup;
 baseUrl="https://localhost:7015/images/";
+//baseUrl="C:/Users/Firnox61/source/repos/ReCapProject/WebAPI/wwwroot/Images/";
 durum:Boolean;
 rentDate:Date;
 returnDate:Date;

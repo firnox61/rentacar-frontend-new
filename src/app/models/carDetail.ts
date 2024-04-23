@@ -4,7 +4,9 @@ export interface CarDetail{
     brandName:string,
     colorName:string,
     modelYear:Number,
-    dailyPrice:number,  
+    dailyPrice:number, 
+    minFindexPoint:number, 
     imagePath:string,
+    
 
 }
