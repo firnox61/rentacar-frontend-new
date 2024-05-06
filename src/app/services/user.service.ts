@@ -39,4 +39,8 @@ export class UserService {
     let newPath = this.apiUrl + 'getuserdetails'
     return this.httpClient.get<ListResponseModel<User>>(newPath)
   }
+  getByEmail(email:string):Observable<SingleResponseModel<User>>{
+    let newPath = this.apiUrl + 'email?email='
+    return this.httpClient.post<SingleResponseModel<User>>(newPath,email)
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginModel } from '../models/loginModel';
 import { SingleResponseModel } from '../models/SingleResponseModel';
@@ -12,6 +12,8 @@ import { User } from '../models/user';
 })
 export class AuthService {
   apiUrl="https://localhost:7015/api/auth/";
+  //public jwtHelperService: JwtHelperService = new JwtHelperService();
+
 
   constructor(private httpClient:HttpClient, private localStorage:LocaleStorageService) { }
 
@@ -20,6 +22,17 @@ export class AuthService {
     let newPath= this.apiUrl+"login";
     return this.httpClient.post<SingleResponseModel<TokenModel>>(newPath,login);
   }
+
+  getUserInfo(token: string){
+    // HTTP isteği için gerekli header'ları oluşturun
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token // Tokeni Authorization header'ında gönder
+    });
+    let newPath= this.apiUrl+"getbyid";
+    // Sunucuya HTTP GET isteği göndererek kullanıcı bilgilerini alın
+    return this.httpClient.get<any>(newPath, { headers: headers });
+  }
+
   register(register:RegisterModel)
   {
     let newPath= this.apiUrl+"register";
@@ -41,6 +54,15 @@ export class AuthService {
     else{
       return false;
     }
+  }
+  private getToken()
+  {
+    return this.localStorage.getItem("token")
+  }
+  getUser()
+  {
+    let token= this.getToken();
+    //let tokenDetails=Object.entries(jwt)
   }
 
 }

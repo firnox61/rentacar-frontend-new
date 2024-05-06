@@ -73,7 +73,7 @@
     </div>
     <p>Hala üye değil misiniz? <a routerLink="/register">Üye olmak için buraya tıklayın</a></p>
 
-    <button class="btn btn-primary w-100 py-2" (click)="login()" >Giriş Yap</button>
+    <button class="btn btn-primary w-100 py-2" (click)="login()" (click)=" getEmail()">Giriş Yap</button>
     <button class="btn btn-primary w-100 py-2" (click)="logOut()" >Çıkış Yap</button>
     <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
   </form>
