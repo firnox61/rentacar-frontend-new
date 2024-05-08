@@ -47,6 +47,15 @@
 <form class="d-flex" role="search">
 <div class="dropdown">
   <button *ngIf="checkToLogin()" class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    {{ loggedInUsername }}
+   
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item" href="cars/user" >Kullanıcı Sayfası</a></li>
+    <li><a class="dropdown-item" href="#" (click)="logout()">Çıkış Yap</a></li>
+  </ul>
+
+  <button *ngIf="!checkToLogin()" class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
     Giriş Yap
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

@@ -1,4 +1,3 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginModel } from '../models/loginModel';
 import { SingleResponseModel } from '../models/SingleResponseModel';
@@ -6,6 +5,10 @@ import { RegisterModel } from '../models/registerModel';
 import { TokenModel } from '../models/tokenModel';
 import { LocaleStorageService } from './locale-storage.service';
 import { User } from '../models/user';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +16,10 @@ import { User } from '../models/user';
 export class AuthService {
   apiUrl="https://localhost:7015/api/auth/";
   //public jwtHelperService: JwtHelperService = new JwtHelperService();
+  jwtHelper=new JwtHelperService();
 
-
-  constructor(private httpClient:HttpClient, private localStorage:LocaleStorageService) { }
+  constructor(private httpClient:HttpClient, private localStorage:LocaleStorageService
+   ) { }
 
   login(login:LoginModel)
   {
@@ -38,9 +42,35 @@ export class AuthService {
     let newPath= this.apiUrl+"register";
     return this.httpClient.post<SingleResponseModel<TokenModel>>(newPath,register);
   }
-  getUserName():string{
-    return this.localStorage.getItem('firstName')
+  getUserName():string | null{
+
+   const token=this.getToken();
+   if(token){
+    const decodedToken=this.jwtHelper.decodeToken(token)
+    return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || null;
+    }
+    return null;
   }
+  getUserDetail()
+  {
+    const token=this.getToken();
+    if(token){
+     const decodedToken=this.jwtHelper.decodeToken(token)
+     return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
+     }
+     return null;
+  }
+  /*getByEmail(email:string):Observable<SingleResponseModel<User>>{
+
+    const token=this.getToken();
+   if(token){
+    const decodedToken=this.jwtHelper.decodeToken(token)
+    return decodedToken["email"] || null;
+    }
+   /* return null;
+    let newPath = this.apiUrl + 'email?email='
+    return this.httpClient.post<SingleResponseModel<User>>(newPath,email)
+  }*/
   logout():void
   {
     this.localStorage.remove('token')

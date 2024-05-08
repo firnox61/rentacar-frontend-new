@@ -17,7 +17,8 @@ export class NaviComponent implements OnInit {
   firstName:string;
   lastName:string;
   isAuthenticated:boolean;
-
+  loggedInUsername: string ;
+  
   constructor(private formBuilder:FormBuilder, private authService:AuthService, 
     private toastrService:ToastrService, private localStorage:LocaleStorageService)
   {
@@ -25,6 +26,7 @@ export class NaviComponent implements OnInit {
   }
   logout():void{
     this.authService.logout();
+    this.loggedInUsername="";
     window.location.reload();
   }
 
@@ -33,14 +35,10 @@ export class NaviComponent implements OnInit {
     this.checkToLogin();
    // throw new Error('Method not implemented.');
   }
-  checkToLogin()
+  checkToLogin():boolean
   {
-    if(this.localStorage.getItem(this.key))
-      {
-      return false;
-  } else {
-      return true;
-  }
+  this.loggedInUsername=this.authService.getUserName();
+  return !!this.loggedInUsername;
   }
  /* checkToLogin() {
     if (this.authService.isAuthanticated()) {

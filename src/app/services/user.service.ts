@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { ResponseModel } from '../models/responseModel';
+import { UserDetail } from '../models/userDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,12 @@ export class UserService {
   getByEmail(email:string):Observable<SingleResponseModel<User>>{
     let newPath = this.apiUrl + 'email?email='
     return this.httpClient.post<SingleResponseModel<User>>(newPath,email)
+  }
+
+  getUserByDetail(userId:number):Observable<SingleResponseModel<UserDetail>>
+  {
+    let newPath=this.apiUrl+'getuserbydetails?id='+userId
+    return this.httpClient.get<SingleResponseModel<UserDetail>>(newPath);
+
   }
 }

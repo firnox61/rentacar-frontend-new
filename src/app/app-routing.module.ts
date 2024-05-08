@@ -17,12 +17,14 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginGuard } from './guards/login.guard';
 import { RegisterGuard } from './guards/register.guard';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   {path:"",pathMatch:"full", component:CarComponent},
   {path:"cars",component:CarComponent},
   //{path:"cars/add",component:CarAddComponent},
   //{path:"cars/update/:carId",component:CarUpdateComponent},
+  {path:"cars/user",component:UserComponent},
   {path:"cars/brandlist/update/:brandId",component:BrandUpdateComponent},
   {path:"cars/colorlist/update/:colorId",component:ColorUpdateComponent},
   {path:"cars/carlist/update/:carId",component:CarUpdateComponent},
