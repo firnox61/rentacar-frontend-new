@@ -74,7 +74,7 @@
             <td>{{ cardetail.dailyPrice }}</td>
             <td>
               <button class="btn btn-info" routerLink="update/{{ cardetail.carId }}">Güncelle</button>
-              <button class="btn btn-primary mx-2" routerLink="delete/{{ cardetail.carId }}">Sil</button>
+              <button class="btn btn-primary mx-2" (click)="carDelete(cardetail)">Sil</button>
               
               </td>
 

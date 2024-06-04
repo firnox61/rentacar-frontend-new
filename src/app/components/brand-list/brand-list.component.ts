@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../services/brand.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Brand } from '../../models/brand';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-brand-list',
@@ -13,7 +14,7 @@ export class BrandListComponent implements OnInit {
   dataLoaded=false;
   filterBrandText="";
   constructor(private brandService:BrandService,private activatedRoute:ActivatedRoute
-    , private router:Router){
+    , private router:Router,private toastrService:ToastrService){
 
   }
   ngOnInit(): void {
@@ -34,7 +35,17 @@ brandUpdate(brand:Brand)
  }
  brandDelete(brand:Brand)
  {
-  this.router.navigate(['/cars/brand/delete',brand.brandId]);
+ this.brandService.delete(brand).subscribe(response=>{
+  this.toastrService.success(response.message,"Silme Başarılı")
+
+ },responseError=>{
+  if(responseError.error.Errors.length>0){
+    for (let i = 0; i < responseError.error.Errors.length; i++) {
+     this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Marka içerisinde araçlar var silemezsiniz!")
+      
+    }
+  }
+})
  }
  brandAdd()
  {

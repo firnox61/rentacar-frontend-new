@@ -24,9 +24,9 @@ export class UserService {
     return this.httpClient.get<ListResponseModel<User>>(newPath);
   }
 
-  update(user:User):Observable<ResponseModel>
+  update(user:User,password:string):Observable<ResponseModel>
   {
-    let newPath = this.apiUrl + 'update'
+    let newPath = this.apiUrl + 'edituser?password='+password
     return this.httpClient.post<ResponseModel>(newPath,user)
   }
 
@@ -44,11 +44,17 @@ export class UserService {
     let newPath = this.apiUrl + 'email?email='
     return this.httpClient.post<SingleResponseModel<User>>(newPath,email)
   }
-
-  getUserByDetail(userId:number):Observable<SingleResponseModel<UserDetail>>
+  getUserBy(userId:number):Observable<SingleResponseModel<UserDetail>>
   {
-    let newPath=this.apiUrl+'getuserbydetails?id='+userId
+    let newPath = this.apiUrl + 'getuserbydetails?id='+userId
     return this.httpClient.get<SingleResponseModel<UserDetail>>(newPath);
+
+  }
+
+  getUserByDetail(userId:number):Observable<SingleResponseModel<User>>
+  {
+    let newPath="https://localhost:7015/api/auth/getbyid?userId="+userId
+    return this.httpClient.get<SingleResponseModel<User>>(newPath);
 
   }
 }

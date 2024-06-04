@@ -100,9 +100,11 @@ carUpdate(car:Car)
  {
    this.router.navigate(['/cars/carlist/update',car.carId]); 
  }
- carDelete(car:Car)
+ carDelete(carDetail:CarDetail)
  {
-  this.router.navigate(['/cars/carlist/delete',car.carId]);
+  this.carService.delete(carDetail).subscribe(response=>{
+    this.toastrService.success(response.message,"Silme Başarılı")
+  })
  }
  carAdd()
  {

@@ -35,6 +35,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UserConnectComponent } from './components/user-connect/user-connect.component';
 import { UserComponent } from './components/user/user.component';
+import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { UserUpdateComponent } from './components/user-update/user-update.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { UserComponent } from './components/user/user.component';
     LoginComponent,
     RegisterComponent,
     UserConnectComponent,
-    UserComponent
+    UserComponent,
+    HomeComponent,
+    FooterComponent,
+    UserUpdateComponent
   ],
   imports: [
     BrowserModule,

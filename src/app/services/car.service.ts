@@ -48,5 +48,10 @@ apiUrl="https://localhost:7015/api/";
   update(car:Car):Observable<ResponseModel>{
     return this.httpClient.post<ResponseModel>(this.apiUrl+"cars/update",car)
   }
+  delete(car:CarDetail):Observable<ResponseModel>
+{
+  let newPath=this.apiUrl+"cars/delete";
+  return this.httpClient.post<ResponseModel>(newPath,car)
+}
 
 }

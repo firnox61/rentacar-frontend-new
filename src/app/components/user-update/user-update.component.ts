@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
-import { UserDetail } from '../../models/userDetail';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrl: './user-update.component.css'
 })
-export class UserComponent implements OnInit {
+export class UserUpdateComponent implements OnInit {
   dataLoaded=false;
-  userByDetail:UserDetail;
+  userByDetail:User;
   userId:User;
   userUpdateForm:FormGroup;
+  //password:string;
   constructor( private activatedRoute:ActivatedRoute
     , private router:Router, private toastrService:ToastrService, private formBuilder:FormBuilder
     , private userService:UserService, private authService:AuthService){
 
   }
+
+
   ngOnInit(): void {
     this.createUserUpdateForm();
     this.getUserByDetail();
@@ -32,13 +34,19 @@ export class UserComponent implements OnInit {
       firstName:["",Validators.required],
       lastName:["",Validators.required],
       email:["",Validators.required],
-      companyName:["",Validators.required]
+      passwordSalt:["",Validators.required],
+      passwordHash:["",Validators.required],
+      status:["",Validators.required],
+      password:["",Validators.required]
+
+     // companyName:["",Validators.required]
+
     });
   }
   getUserByDetail()
   {
     let userId=this.authService.getUserDetail()
-    this.userService.getUserBy(userId).subscribe(response=>{
+    this.userService.getUserByDetail(userId).subscribe(response=>{
       this.userByDetail=response.data;
       this.dataLoaded=true;
       //this.createUserUpdateForm();
@@ -52,18 +60,18 @@ export class UserComponent implements OnInit {
       firstName: this.userByDetail.firstName,
       lastName: this.userByDetail.lastName,
       email: this.userByDetail.email,
-      companyName:this.userByDetail.companyName
-      /*passwordSalt:this.userByDetail.passwordSalt,
+      passwordSalt:this.userByDetail.passwordSalt,
       passwordHash:this.userByDetail.passwordHash,
-      status:this.userByDetail.status,*/
+      status:this.userByDetail.status,
+      
     });
   }
- /* update()
+  update()
   {
     if(this.userUpdateForm.valid)
       {
         let userModel=Object.assign({},this.userUpdateForm.value)
-        this.userService.update(userModel).subscribe(response=>{
+        this.userService.update(userModel,userModel.value.password).subscribe(response=>{
           console.log(response);
           this.toastrService.success(response.message,"Başarılı")
         },responseError=>{
@@ -74,7 +82,8 @@ export class UserComponent implements OnInit {
             }
           }
         })
-  }*/
+  }
   
 
+}
 }

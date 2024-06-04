@@ -18,13 +18,16 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginGuard } from './guards/login.guard';
 import { RegisterGuard } from './guards/register.guard';
 import { UserComponent } from './components/user/user.component';
+import { HomeComponent } from './components/home/home.component';
+import { UserUpdateComponent } from './components/user-update/user-update.component';
 
 const routes: Routes = [
-  {path:"",pathMatch:"full", component:CarComponent},
+  {path:"",pathMatch:"full", component:HomeComponent},
   {path:"cars",component:CarComponent},
   //{path:"cars/add",component:CarAddComponent},
   //{path:"cars/update/:carId",component:CarUpdateComponent},
   {path:"cars/user",component:UserComponent},
+  {path:"cars/user/userupdate",component:UserUpdateComponent},
   {path:"cars/brandlist/update/:brandId",component:BrandUpdateComponent},
   {path:"cars/colorlist/update/:colorId",component:ColorUpdateComponent},
   {path:"cars/carlist/update/:carId",component:CarUpdateComponent},
