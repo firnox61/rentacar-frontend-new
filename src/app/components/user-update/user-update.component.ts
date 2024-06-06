@@ -71,17 +71,18 @@ export class UserUpdateComponent implements OnInit {
     if(this.userUpdateForm.valid)
       {
         let userModel=Object.assign({},this.userUpdateForm.value)
-        this.userService.update(userModel,userModel.value.password).subscribe(response=>{
+        this.userService.update(userModel,this.userUpdateForm.value.password).subscribe(response=>{
           console.log(response);
           this.toastrService.success(response.message,"Başarılı")
-        },responseError=>{
+        },
+          responseError=>{
           if(responseError.error.Errors.length>0){
             for (let i = 0; i < responseError.error.Errors.length; i++) {
               this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Doğrulama Hatası")
               
             }
           }
-        })
+        });
   }
   
 

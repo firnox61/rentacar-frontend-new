@@ -58,6 +58,9 @@ export class UserComponent implements OnInit {
       status:this.userByDetail.status,*/
     });
   }
+  navigateToUpdate() {
+    this.router.navigate(['/cars/user/userupdate']);
+  }
  /* update()
   {
     if(this.userUpdateForm.valid)

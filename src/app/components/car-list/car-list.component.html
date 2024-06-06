@@ -1,47 +1,4 @@
- <!-- <table class="table">
-    <thead class="table-info">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Marka</th>
-            <th scope="col">
-                <button class="btn btn-success" (click)="carAdd()">
-          Araç Ekle
-            </button>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-       
-            <div *ngFor="let cardetail of carsDetail">
-            <td>{{cardetail.carId}}</td>
-            <td>{{cardetail.carName}}</td>
-            <td>{{cardetail.brandName}}</td>
-            <td>{{cardetail.colorName}}</td>
-            <td>{{cardetail.modelYear}}</td>
-            <td>{{cardetail.dailyPrice}}</td>
-      
-            <td>
-                <img *ngIf="cardetail.imagePath"  [src]="baseUrl + cardetail.imagePath"
-                class="icon"
-                style="object-fit: cover"
-                width="150"
-                height="75%"/>
-                <img *ngIf="!cardetail.imagePath" [src]="baseUrl + 'defaultCar.jpg'"
-                class="icon"
-                style="object-fit: cover"
-                width="150"
-                height="75%"/> 
-             
-            </td>
-            <td>
-                 <button class="btn btn-warning" click="routerLink" routerLink="update/{{car.carId}}">Güncelle</button>
-                <button class="btn btn-danger mx-2" click="routerLink" routerLink="delete/{{car.carId}}">Sil</button> 
-            </td>
-        
-        
-    </tbody>
-    
-  </table>  -->
+
   <table class="table">
     <thead class="table-info">
       <div class="mb-3">
@@ -56,11 +13,11 @@
       </div>
         <tr>
             <th scope="col">Id</th>
+            <th scope="col">Model</th>
             <th scope="col">Marka</th>
             <th scope="col">Renk</th>
             <th scope="col">Model Yılı</th>
-            <th scope="col">Günlük Fiyat</th>
-            <th scope="col">Resim</th>
+            <th scope="col">Günlük Ücret</th>
             <th scope="col">İşlemler</th>
         </tr>
     </thead>
@@ -71,7 +28,8 @@
             <td>{{ cardetail.brandName }}</td>
             <td>{{ cardetail.colorName }}</td>
             <td>{{ cardetail.modelYear }}</td>
-            <td>{{ cardetail.dailyPrice }}</td>
+            <td>{{ cardetail.dailyPrice | currency:'TRY ':'symbol':'1.2-2' }}</td>
+
             <td>
               <button class="btn btn-info" routerLink="update/{{ cardetail.carId }}">Güncelle</button>
               <button class="btn btn-primary mx-2" (click)="carDelete(cardetail)">Sil</button>

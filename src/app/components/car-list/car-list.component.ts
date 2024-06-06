@@ -91,8 +91,16 @@ export class CarListComponent implements OnInit {
   getCarsDetails()
 {
   this.carDetailService.getCarsDetail().subscribe(response=>{
-    this.carsDetail=response.data;
-    this.dataLoaded=true;
+    if(response.data.length===0)
+      {
+        this.toastrService.warning('Uygun araç bulunamamıştır', 'Arama Sonucu');
+      }
+      else{
+        this.carsDetail=response.data;
+        this.dataLoaded=true;
+        this.toastrService.info('Uygun araçlar');
+      }
+
   })
 }
 

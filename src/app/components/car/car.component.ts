@@ -7,6 +7,7 @@ import { BrandService } from '../../services/brand.service';
 import { ColorService } from '../../services/color.service';
 import { Brand } from '../../models/brand';
 import { Color } from '../../models/color';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-car',
@@ -28,7 +29,8 @@ export class CarComponent implements OnInit {
 
 
   constructor(private carService:CarService, private activatedRoute:ActivatedRoute
-    , private router:Router, private brandService:BrandService, private colorService:ColorService)
+    , private router:Router, private brandService:BrandService, private colorService:ColorService
+  ,private toastrService:ToastrService)
 {
 
 }
@@ -88,8 +90,17 @@ export class CarComponent implements OnInit {
   getCarsByBrandAndColor(brandName:string,colorName:string)
   {
     this.carService.getCarsByBrandAndColor(brandName,colorName).subscribe(response=>{
-      this.cars=response.data;
-      this.dataLoaded=true;
+      if(response.data.length===0)
+        {
+          this.toastrService.warning('Uygun araç bulunamamıştır', 'Arama Sonucu');
+        }
+        else{
+          this.cars=response.data;
+          this.dataLoaded=true;
+          this.toastrService.info('Uygun araçlar');
+
+        }
+      
     })
   }
   // getCarsById(carId:number)

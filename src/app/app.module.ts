@@ -38,6 +38,9 @@ import { UserComponent } from './components/user/user.component';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UserUpdateComponent } from './components/user-update/user-update.component';
+import { CarDeleteComponent } from './components/delete/car-delete/car-delete.component';
+import { BrandDeleteComponent } from './components/delete/brand-delete/brand-delete.component';
+import { ColorDeleteComponent } from './components/delete/color-delete/color-delete.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +75,10 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
     UserComponent,
     HomeComponent,
     FooterComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    CarDeleteComponent,
+    BrandDeleteComponent,
+    ColorDeleteComponent
   ],
   imports: [
     BrowserModule,
