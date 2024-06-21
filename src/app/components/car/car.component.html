@@ -29,34 +29,31 @@
 
   <div class="mb-3">
     <button (click)="getCarsByBrandAndColor(selectBrand, selectColor)" class="btn btn-primary me-2">Filtrele</button>
-    <button (click)="clearfilter()" (click)="getCars()" class="btn btn-secondary me-2">Temizle</button>
-    <button (click)="carAdd()" class="btn btn-success">Ekle</button>
+    <button (click)="clearfilter()" (click)="getCarDetail()" class="btn btn-secondary me-2">Temizle</button>
+    <!-- <button (click)="carAdd()" class="btn btn-success">Ekle</button> -->
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="list-group">
-        <a *ngFor="let car of cars | filterPipe:filterText" class="list-group-item list-group-item-action"
-           [class.active]="car == currentCar" (click)="setCurrentCar(car)">
-          <div>
-            <strong>Model:</strong> {{ car.carName }}
+    <div class="col-12">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div *ngFor="let car of carsDetail | filterPipe:filterText" class="col">
+          <div class="card h-100">
+            <img *ngIf="car.imagePath" [src]="baseUrl + car.imagePath" class="card-img-top" alt="{{ car.carName }}" style="height: 200px; object-fit: cover;">
+            <img *ngIf="!car.imagePath" [src]="baseUrl + 'defaultCar.jpg'" class="card-img-top" alt="Default Car" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ car.carName }}</h5>
+              <p class="card-text"><strong>Marka:</strong> {{ car.brandName }}</p>
+              <p class="card-text"><strong>Model Yılı:</strong> {{ car.modelYear }}</p>
+              <p class="card-text"><strong>Günlük Fiyat:</strong> {{ car.dailyPrice | currency:'TRY':'symbol':'1.2-2' }}</p>
+              <a (click)="setCurrentCar(car)" class="btn btn-primary">Detayları Gör</a>
+            </div>
           </div>
-          <div>
-            <strong>Model Yılı:</strong> {{ car.modelYear }}
-          </div>
-          <div>
-            <strong>Günlük Fiyat:</strong> {{ car.dailyPrice | currency:'TRY':'symbol':'1.2-2' }}
-          </div>
-          <div class="mt-2">
-            <!-- <button (click)="carUpdate(car)" class="btn btn-primary btn-sm me-1">Güncelle</button> -->
-            <!-- <button (click)="carDelete(car)" class="btn btn-danger btn-sm">Sil</button> -->
-          </div>
-        </a>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-8">
-      <div *ngIf="currentCar; else noCarSelected">
+    <div class="col-md-12 mt-5">
+      <div *ngIf="currentCar">
         <h2>{{ currentCar.carName }} Detayları</h2>
         <ul>
           <li><strong>Model:</strong> {{ currentCar.carName | uppercase }}</li>
@@ -66,85 +63,97 @@
           <li><strong>Günlük Fiyat:</strong> {{ currentCar.dailyPrice | currency:'TRY':'symbol':'1.2-2' }}</li>
         </ul>
       </div>
-      <ng-template #noCarSelected>
-        <p>Lütfen bir araç seçin.</p>
-      </ng-template>
     </div>
   </div>
 </div>
 
-<!-- <div class="mb-3">
-  <label for="filterText" class="form-label">Araç ara</label>
-  <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="arama ifadesi giriniz">
-</div>
-<div *ngIf="filterText.length>2" class="alert alert-success">
-  {{filterText}} aradınız.
-</div>
+<!-- <div class="container my-5">
+  <div class="mb-3">
+    <label for="filterText" class="form-label">Araç ara</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="arama ifadesi giriniz">
+  </div>
+  <div *ngIf="filterText.length > 2" class="alert alert-success">
+    {{filterText}} aradınız.
+  </div>
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {{ selectBrand || 'Markalar' }}
-  </button>
-  <ul class="dropdown-menu">
-    <li *ngFor="let brand of brands">
-      <a class="dropdown-item" (click)="updateSelectedBrand(brand)" >{{brand.brandName}}
+  <div class="dropdown mb-3">
+    <button class="btn btn-secondary dropdown-toggle me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ selectBrand || 'Markalar' }}
+    </button>
+    <ul class="dropdown-menu">
+      <li *ngFor="let brand of brands">
+        <a class="dropdown-item" (click)="updateSelectedBrand(brand)">{{ brand.brandName }}</a>
+      </li>
+    </ul>
 
-      </a>
-    </li>
-  </ul>
+    <button class="btn btn-secondary dropdown-toggle me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ selectColor || 'Renkler' }}
+    </button>
+    <ul class="dropdown-menu">
+      <li *ngFor="let color of colors">
+        <a class="dropdown-item" (click)="updateSelectedColor(color)">{{ color.colorName }}</a>
+      </li>
+    </ul>
+  </div>
 
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {{ selectColor || 'Renkler' }}
-  </button>
-  <ul class="dropdown-menu" >
-    <li *ngFor="let color of colors">
-      <a class="dropdown-item"  (click)="updateSelectedColor(color)">{{color.colorName}}
-      </a>
-    </li>
+  <div class="mb-3">
+    <button (click)="getCarsByBrandAndColor(selectBrand, selectColor)" class="btn btn-primary me-2">Filtrele</button>
+    <button (click)="clearfilter()" (click)="getCarDetail()" class="btn btn-secondary me-2">Temizle</button>
+   
+  </div>
 
-  </ul>
-</div>
-  <button (click)="getCarsByBrandAndColor(selectBrand,selectColor)" class="btn btn-primary" type="submit">Filtrele</button>
-  <button (click)="clearfilter()" (click)="getCars()" class="btn btn-primary" type="submit">Temizle</button>
-
-  <button (click)="carAdd()"  class="btn btn-primary" type="submit">Ekle</button>
-
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="list-group">
-          <a *ngFor="let car of cars | filterPipe:filterText"
-             class="list-group-item"
-             [class.active]="car == currentCar"
-             (click)="setCurrentCar(car)">
-  
-            <li><strong>Araba Adı:</strong> {{ car.carName }}</li>
-            <li><strong>Model Yılı:</strong> {{ car.modelYear }}</li>
-            <li><strong>Günlük Fiyat:</strong> {{ car.dailyPrice }}</li>
-            <li>  
-              <button (click)="carUpdate(car)" class="btn btn-primary btn-sm" >Güncelle</button>
-              
-              <button class="btn btn-danger btn-sm" >Sil</button></li>
-  
-          </a>
-        </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="list-group">
+        <a *ngFor="let car of carsDetail | filterPipe:filterText" class="list-group-item list-group-item-action"
+           [class.active]="car == currentCar" (click)="setCurrentCar(car)">
+          <div>
+            <strong>Model:</strong> {{ car.carName }}
+          </div>
+          <div>
+            <strong>Marka:</strong> {{ car.brandName }}
+          </div>
+          <div>
+            <strong>Model Yılı:</strong> {{ car.modelYear }}
+          </div>
+          <div>
+            <strong>Günlük Fiyat:</strong> {{ car.dailyPrice | currency:'TRY':'symbol':'1.2-2' }}
+          </div>
+          <div>
+            <td>
+              <img *ngIf="car.imagePath"  [src]="baseUrl + car.imagePath"
+              class="icon"
+              style="object-fit: cover"
+              width="150"
+              height="75%"/>
+              <img *ngIf="!car.imagePath" [src]="baseUrl + 'defaultCar.jpg'"
+              class="icon"
+              style="object-fit: cover"
+              width="150"
+              height="75%"/> 
+           
+          </td>
+          </div>
+          <div class="mt-2">
+          
+          </div>
+        </a>
       </div>
+    </div>
+
     <div class="col-md-8">
-      <div *ngIf="currentCar; else noCarSelected">
+   
+        <div *ngIf="currentCar">
         <h2>{{ currentCar.carName }} Detayları</h2>
         <ul>
-          <li><strong>Araba Adı:</strong> {{ currentCar.carName |uppercase }}</li>
-          <li><strong>Marka Adı:</strong> {{ currentCar.brandName |uppercase}}</li>
-          <li><strong>Araba Renk:</strong> {{ currentCar.colorName|uppercase }}</li>
+          <li><strong>Model:</strong> {{ currentCar.carName | uppercase }}</li>
+          <li><strong>Marka:</strong> {{ currentCar.brandName | uppercase }}</li>
+          <li><strong>Renk:</strong> {{ currentCar.colorName | uppercase }}</li>
           <li><strong>Model Yılı:</strong> {{ currentCar.modelYear }}</li>
           <li><strong>Günlük Fiyat:</strong> {{ currentCar.dailyPrice | currency:'TRY':'symbol':'1.2-2' }}</li>
-
         </ul>
       </div>
-      <ng-template #noCarSelected>
-        <p>Lütfen bir araç seçin.</p>
-      </ng-template>
+    
     </div>
   </div>
 </div> -->

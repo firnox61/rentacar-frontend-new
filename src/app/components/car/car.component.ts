@@ -8,6 +8,7 @@ import { ColorService } from '../../services/color.service';
 import { Brand } from '../../models/brand';
 import { Color } from '../../models/color';
 import { ToastrService } from 'ngx-toastr';
+import { CarDetailService } from '../../services/car-detail.service';
 
 @Component({
   selector: 'app-car',
@@ -16,8 +17,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CarComponent implements OnInit {
   cars:Car[]=[];
+  carsDetail:CarDetail[]=[];
   dataLoaded=false;
-  currentCar:Car;
+  currentCar:CarDetail;
   baseUrl="https://localhost:7015/images/";
   filterText="";
   brands:Brand[]=[];
@@ -25,18 +27,22 @@ export class CarComponent implements OnInit {
   selectBrand:string;
   selectColor:string;
   currentBrand:Brand;
+  
   //carsDetail:CarDetail[];
 
 
   constructor(private carService:CarService, private activatedRoute:ActivatedRoute
     , private router:Router, private brandService:BrandService, private colorService:ColorService
-  ,private toastrService:ToastrService)
+  ,private toastrService:ToastrService, private carDetailService:CarDetailService)
 {
 
 }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params=>{
+    this.getCarDetail();
+    this.getBrands();
+    this.getColors();
+   /* this.activatedRoute.params.subscribe(params=>{
       if(params["brandId"]){
         this.getCarsByBrand(params["brandId"]);
       }
@@ -49,13 +55,20 @@ export class CarComponent implements OnInit {
         this.getBrands();
         this.getColors();
       }
-    })
+    })*/
     //this.getCarsDetail();
   }
   getBrands()
   {
     this.brandService.getBrands().subscribe(response=>{
       this.brands=response.data;
+      this.dataLoaded=true;
+    })
+  }
+  getColors()
+  {
+    this.colorService.getColors().subscribe(response=>{
+      this.colors=response.data;
       this.dataLoaded=true;
     })
   }
@@ -73,17 +86,18 @@ export class CarComponent implements OnInit {
     this.selectBrand="";
     this.selectColor="";
   }
-  getColors()
-  {
-    this.colorService.getColors().subscribe(response=>{
-      this.colors=response.data;
-      this.dataLoaded=true;
-    })
-  }
-  getCars()
+
+  /*getCars()
   {
     this.carService.getCars().subscribe(Response=>{
       this.cars=Response.data;
+      this.dataLoaded=true;
+    })
+  }*/
+  getCarDetail()
+  {
+    this.carDetailService.getCarsDetail().subscribe(response=>{
+      this.carsDetail=response.data;
       this.dataLoaded=true;
     })
   }
@@ -95,7 +109,7 @@ export class CarComponent implements OnInit {
           this.toastrService.warning('Uygun araç bulunamamıştır', 'Arama Sonucu');
         }
         else{
-          this.cars=response.data;
+          this.carsDetail=response.data;
           this.dataLoaded=true;
           this.toastrService.info('Uygun araçlar');
 
@@ -103,15 +117,9 @@ export class CarComponent implements OnInit {
       
     })
   }
-  // getCarsById(carId:number)
-  // {
-  //   this.carService.getCarsById(carId).subscribe(response=>{
-  //     this.cars=response.data;
-  //     this.dataLoaded=true;
-  //   })
-  // }
+
   
-  getCarsByBrand(brandId:number)
+  /*getCarsByBrand(brandId:number)
   {
       this.carService.getCarsByBrand(brandId).subscribe(response=>{
       this.cars=response.data;
@@ -124,14 +132,14 @@ export class CarComponent implements OnInit {
       this.cars=response.data;
       this.dataLoaded=true;
     })
-  }
+  }*/
 
-  setCurrentCar(car:Car){
+  setCurrentCar(car:CarDetail){
     this.currentCar=car;
     this.router.navigate(['/cars',car.carId]);
     
   }
-  getCurrentCarClass(car:Car){
+  getCurrentCarClass(car:CarDetail){
     if(car==this.currentCar){
       return "list-group-item active";
     }

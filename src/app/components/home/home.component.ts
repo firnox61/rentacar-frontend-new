@@ -22,9 +22,10 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor() { }
-
   ngOnInit(): void {
+    
   }
+
 
   searchCars(): void {
     // Araç arama fonksiyonu burada olacak

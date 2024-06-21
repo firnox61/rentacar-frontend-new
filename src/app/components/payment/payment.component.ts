@@ -5,6 +5,7 @@ import { Subscriber } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-payment',
@@ -12,30 +13,30 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './payment.component.css'
 })
 export class PaymentComponent implements OnInit {
-  id:Number;
-  customerId:Number;
-  cardNumber:string;
-  expiryMonth: Number;
-  expiryYear: Number;
-  cvv: string;
-  fullName:string;
+
 paymentAddForm:FormGroup
 durum:boolean;
+customerId= this.authService.getUserDetail();
 
 
 
-  constructor(private paymentService:PaymentService, private toastrService:ToastrService,private formBuilder:FormBuilder,private activatedRoot:ActivatedRoute)
+  constructor(private paymentService:PaymentService, private toastrService:ToastrService,private formBuilder:FormBuilder
+    ,private activatedRoot:ActivatedRoute,private authService:AuthService)
   {
-
+    //this.customerId = this.authService.getUserDetail();
   }
   ngOnInit(): void {
    this.createPaymentAddForm();
   }
-
+  getUserId()
+  {
+    this.authService.getUserDetail();
+  }
+ 
+  //id:["",Validators.required],
   createPaymentAddForm(){
     this.paymentAddForm=this.formBuilder.group({
-      id:["",Validators.required],
-      customerId:["",Validators.required],
+      customerId:[this.customerId,Validators.required],
       cardNumber:["",Validators.required],
       expiryMonth:["",Validators.required],
       expiryYear:["",Validators.required],
@@ -47,7 +48,7 @@ durum:boolean;
   {
     if(this.paymentAddForm.valid)
       {
-        let paymentModel=Object.assign({},this.paymentAddForm.value)
+        let paymentModel=Object.assign({},this.paymentAddForm.value);
         this.paymentService.add(paymentModel).subscribe(response=>{
           console.log(response)
           this.toastrService.success(response.message,"Kiralama  işlemi başarılı bir şekilde tamamlandı !!!")
@@ -61,6 +62,12 @@ durum:boolean;
         })
       }
       else{
+        /*let paymentModel=Object.assign({},this.paymentAddForm.value)
+        this.paymentService.add(paymentModel).subscribe(response=>{
+          console.log(response);
+        })*/
+          
+          
         this.toastrService.error("Form Eksik","Dikkat")
       }
     }

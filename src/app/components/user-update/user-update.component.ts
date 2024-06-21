@@ -31,6 +31,7 @@ export class UserUpdateComponent implements OnInit {
   createUserUpdateForm()
   {
     this.userUpdateForm=this.formBuilder.group({
+      id:["",Validators.required],
       firstName:["",Validators.required],
       lastName:["",Validators.required],
       email:["",Validators.required],
@@ -57,6 +58,7 @@ export class UserUpdateComponent implements OnInit {
   }
   populateUserForm() {
     this.userUpdateForm.patchValue({
+      id:this.userByDetail.id,
       firstName: this.userByDetail.firstName,
       lastName: this.userByDetail.lastName,
       email: this.userByDetail.email,
@@ -75,16 +77,16 @@ export class UserUpdateComponent implements OnInit {
           console.log(response);
           this.toastrService.success(response.message,"Başarılı")
         },
-          responseError=>{
-          if(responseError.error.Errors.length>0){
-            for (let i = 0; i < responseError.error.Errors.length; i++) {
-              this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Doğrulama Hatası")
-              
-            }
+        responseError=>{
+        if(responseError.error.Errors.length>0){
+          for (let i = 0; i < responseError.error.Errors.length; i++) {
+            this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Doğrulama Hatası")
+            
           }
-        });
-  }
-  
+        }
+      });
+}
+
 
 }
 }

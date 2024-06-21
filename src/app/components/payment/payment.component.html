@@ -1,4 +1,55 @@
- <div>
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card p-3">
+          <div class="card-body">
+            <h4 class="mb-3">Ödeme Bilgileri</h4>
+            <form [formGroup]="paymentAddForm">
+              <div class="form__div">
+                <input type="text" id="cardNumber" class="form-control" formControlName="cardNumber" placeholder=" " required>
+                <label for="cardNumber" class="form__label">Kredi Kartı Numarası</label>
+              </div>
+              <div class="form__div">
+                <input type="text" id="customerId" class="form-control" formControlName="customerId" placeholder=" " required>
+                <label for="customerId" class="form__label">customerId</label>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form__div">
+                    <select id="expiryMonth" class="form-control" formControlName="expiryMonth" required>
+                      <option value="">Ay</option>
+                      <option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month">{{month | number:'2.0'}}</option>
+                    </select>
+                    <label for="expiryMonth" class="form__label">Son Kullanma Ayı</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form__div">
+                    <select id="expiryYear" class="form-control" formControlName="expiryYear" required>
+                      <option value="">Yıl</option>
+                      <option *ngFor="let year of [2023,2024,2025,2026,2027]" [value]="year">{{year}}</option>
+                    </select>
+                    <label for="expiryYear" class="form__label">Son Kullanma Yılı</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form__div">
+                <input type="text" id="cvv" class="form-control" formControlName="cvv" placeholder=" " required>
+                <label for="cvv" class="form__label">CVV</label>
+              </div>
+              <div class="form__div">
+                <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder=" " required>
+                <label for="fullName" class="form__label">Kart Sahibinin Adı Soyadı</label>
+              </div>
+              <button  type="submit" (click)="add()" class="btn btn-primary w-100">Ödeme Yap</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ <!-- <div>
     <label for="cardNumber">Kredi Kartı Numarası:</label>
     <input type="text" id="cardNumber" name="cardNumber" [(ngModel)]="cardNumber">
   
@@ -24,7 +75,7 @@
     <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName">
   
     <button (click)="add()">Ödeme Yap</button> 
-  </div> 
+  </div>  -->
   <!-- <div class="container">
     <div class="row">
         <div class="col-lg-4 mb-lg-0 mb-3">

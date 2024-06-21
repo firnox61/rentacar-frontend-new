@@ -1,4 +1,84 @@
-img {
-    max-width: 100px; /* Resim genişliği */
-    height: auto; /* Orantılı yükseklik */
-  }
+/* img {
+    max-width: 100px; 
+    height: auto; 
+  } */
+   /* Genel stil */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Spinner stil */
+.spinner-border {
+  margin: 20px auto;
+  display: block;
+}
+
+/* Tablo stil */
+.table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+}
+
+.table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Görsel stil */
+.icon {
+  border-radius: 5px;
+}
+
+/* Buton stil */
+.btn {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Form alanları stil */
+label {
+  display: block;
+  margin: 10px 0 5px 0;
+}
+
+input[type="number"], input[type="datetime-local"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+}
+
+/* Durum mesajı stil */
+div p {
+  font-weight: bold;
+  color: red;
+}

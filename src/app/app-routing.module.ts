@@ -24,6 +24,7 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
 const routes: Routes = [
   {path:"",pathMatch:"full", component:HomeComponent},
   {path:"cars",component:CarComponent},
+  { path: "cars/payment", component: PaymentComponent },
   //{path:"cars/add",component:CarAddComponent},
   //{path:"cars/update/:carId",component:CarUpdateComponent},
   {path:"cars/user",component:UserComponent},
@@ -39,7 +40,7 @@ const routes: Routes = [
   {path:"cars/color/:colorId",component:CarComponent},
   {path:"cars/:carId",component:CarDetailComponent},
   {path:"rental/:carId",component:RentalComponent},
-  { path: 'payment', component: PaymentComponent },
+  
   {path:"cars/brandlist/add",component:BrandAddComponent},
   {path:"cars/colorlist/add",component:ColorAddComponent},
   {path:"cars/carlist/add",component:CarAddComponent, canActivate:[LoginGuard,RegisterGuard]},

@@ -36,10 +36,10 @@ apiUrl="https://localhost:7015/api/";
     let newPath=this.apiUrl+"cars/getbycolor?colorId="+colorId;
     return this.httpClient.get<ListResponseModel<Car>>(newPath);
   }
-  getCarsByBrandAndColor(brandName:string,colorName:string):Observable<ListResponseModel<Car>>
+  getCarsByBrandAndColor(brandName:string,colorName:string):Observable<ListResponseModel<CarDetail>>
   {
     let newPath=this.apiUrl+"cars/getcarbybrandandcolor?brandName=" + brandName + "&colorName=" + colorName;
-    return this.httpClient.get<ListResponseModel<Car>>(newPath);
+    return this.httpClient.get<ListResponseModel<CarDetail>>(newPath);
   }
   add(car:Car):Observable<ResponseModel>{
     return this.httpClient.post<ResponseModel>(this.apiUrl+"cars/add",car)

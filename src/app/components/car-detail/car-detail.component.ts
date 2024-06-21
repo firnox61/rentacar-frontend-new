@@ -8,6 +8,7 @@ import { RentalService } from '../../services/rental.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -15,7 +16,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './car-detail.component.css'
 })
 export class CarDetailComponent implements OnInit {
-
+rentalAddForm:FormGroup;
 carsDetail:CarDetail[]=[];
 carsDetailcar:CarDetail;
 dataLoaded=false;
@@ -33,10 +34,11 @@ id:number;
 brandName:string;
 firstName:string;
 lastName:string;
+userid=this.authService.getUserDetail();
 
 constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute
   ,private rentalService:RentalService, private router:Router, private toastrService:ToastrService
-  ,private cartService:CartService,private formBuilder:FormBuilder)
+  ,private cartService:CartService,private formBuilder:FormBuilder, private authService:AuthService)
 {
 
 }
@@ -47,6 +49,9 @@ this.activatedRoute.params.subscribe((params) => {
    // const carId = +params['carId'];
    this.carId=+params['carId']
     this.getCarsDetailByCar(this.carId);//araca tıkladığımızda araç detaylarını gösteriyor
+    console.log(this.userid);
+    let carId=params['carId'];
+    this.createRentalAddForm(carId)
    // this.getCheckRentalCars();
   } else {
     //this.getCheckRentalCars(this.carId,this.rentDate,this.returnDate);
@@ -56,16 +61,34 @@ this.activatedRoute.params.subscribe((params) => {
   
 });
 }
-
+createRentalAddForm(carId:string)
+{
+  this.rentalAddForm=this.formBuilder.group({
+    carId:[carId,Validators.required],
+    customerId:[this.userid,Validators.required],
+    rentDate:["",Validators.required],
+    returnDate:["",Validators.required]
+  })
+}
+add()
+{
+  if(this.rentalAddForm.valid)
+    {
+      let rentalModel=Object.assign({},this.rentalAddForm.value)
+      this.rentalService.AddRental(rentalModel).subscribe(response=>{
+        console.log(response);
+      })
+    }
+}
 
 AddRental(): void
 {
   const rental: Rental = {
     brandName:this.brandName,
-   firstName:this.firstName,
+    firstName:this.firstName,
     lastName:this.lastName,
     id:this.id,
-    customerId: this.customerId,
+    customerId: this.userid,
     carId: this.carsDetailcar.carId,
     rentDate: this.rentDate,
     returnDate: this.returnDate
@@ -82,24 +105,6 @@ AddRental(): void
    }
   })
 }
-// createCheckRentalCar()
-// {
-// this.checkRentalCar=this.formBuilder.group({
-//   carId:["",Validators.required],
-//   rentDate:["",Validators.required],
-//   returnDate:["",Validators.required]
-// })
-// }
-// getCheckRentalCars()
-// {
-//   if(this.checkRentalCar.valid)
-//   {
-//     let rentalModel=Object.assign({},this.checkRentalCar.value)
-//     this.rentalService.getCheckRentalCars(rentalModel).subscribe(response=>{
-//       console.log(response)
-//     })
-//   }
-// }
 
   getCheckRentalCars()
  {
@@ -147,7 +152,7 @@ this.carDetailService.getCarsDetail().subscribe(response=>{
 
 navigateToRental():void {
  // Kiralama sayfasına yönlendirme
- this.router.navigate(['/payment', this.carsDetailcar.carId]);
+ this.router.navigate(['cars/payment', this.carsDetailcar.carId]);
 }
 addToCart(carsDetailcar:CarDetail)
 {
@@ -162,7 +167,7 @@ addToCart(carsDetailcar:CarDetail)
 }
 kirala(): void {
   // Kiralama işlemi burada gerçekleştirilir
-  this.router.navigate(['/payment']); // Ödeme sayfasına yönlendirme
+  this.router.navigate(['cars/payment']); // Ödeme sayfasına yönlendirme
 }
 
 

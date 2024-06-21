@@ -6,10 +6,10 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Araç Adı</th>
-            <th>Marka Adı</th>
-            <th>Renk</th>
             <th>Model</th>
+            <th>Marka </th>
+            <th>Renk</th>
+            <th>Model Yılı</th>
             <th>Ücret</th>
             <th>Resim</th>
         </tr>
@@ -22,7 +22,7 @@
         <td>{{carsDetailcar.brandName}}</td>
         <td>{{carsDetailcar.colorName}}</td>
         <td>{{carsDetailcar.modelYear}}</td>
-        <td>{{carsDetailcar.dailyPrice}}</td>
+        <td>{{carsDetailcar.dailyPrice | currency:'TRY ':'symbol':'1.2-2'}}</td>
   
         <td>
             <img *ngIf="carsDetailcar.imagePath"  [src]="baseUrl + carsDetailcar.imagePath"
@@ -37,9 +37,31 @@
             height="75%"/> 
          
         </td>
-        <div>
-            <!-- <label for="carId">Araç ID:</label> 
-            <input type="number" id="carId" name="carId" [(ngModel)]="carId">-->
+        <div class="container">
+            <form [formGroup]="rentalAddForm" (ngSubmit)="add()">
+              <div class="mb-3">
+                <label for="carId" class="form-label">Car ID</label>
+                <input type="text" id="carId" class="form-control" formControlName="carId" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="customerId" class="form-label">Customer ID</label>
+                <input type="text" id="customerId" class="form-control" formControlName="customerId" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="rentDate" class="form-label">Rent Date</label>
+                <input type="date" id="rentDate" class="form-control" formControlName="rentDate" >
+              </div>
+              <div class="mb-3">
+                <label for="returnDate" class="form-label">Return Date</label>
+                <input type="date" id="returnDate" class="form-control" formControlName="returnDate">
+              </div>
+              <button  (click)="add()"(click)="addToCart(carsDetailcar)" (click)="kirala()" class="btn btn-primary">Add Rental</button>
+              <!-- type="submit" -->
+            </form>
+          </div>
+        <!-- <div>
+             <label for="carId">Araç ID:</label> 
+            <input type="number" id="carId" name="carId" [(ngModel)]="carId">
 
             <label for="customerId">Customer ID:</label>
             <input type="number" id="customerId" name="customerId" [(ngModel)]="customerId">
@@ -52,12 +74,12 @@
           
             <button (click)="AddRental()"(click)="addToCart(carsDetailcar)" (click)="kirala()" type="button" class="btn btn-success">Kirala</button>
             <button (click)="getCheckRentalCars()" type="button" class="btn btn-success">Kontrol Et</button>
-          </div>
+          </div> -->
           
           <div *ngIf="durum !== null">
             <p *ngIf="!durum">Araç kiralanamaz</p>
             <p *ngIf="durum">Araç kiralanabilir durumda</p>
-          </div>
+        </div>
           
 
      
@@ -69,7 +91,7 @@
         <td>{{carDetail.brandName}}</td>
         <td>{{carDetail.colorName}}</td>
         <td>{{carDetail.modelYear}}</td>
-        <td>{{carDetail.dailyPrice}}</td>
+        <td>{{carDetail.dailyPrice | currency:'TRY':'symbol':'1.2-2'}}</td>
        
         <td>
             <img *ngIf="carDetail.imagePath"  [src]="baseUrl + carDetail.imagePath"

@@ -7,6 +7,7 @@ export interface Car{
     carName:string,
     brandName:string,
     colorName:string,
-    imagePath:string 
+    imagePath:string ,
+    minFindexPoint:number
     
 }
